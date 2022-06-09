@@ -1,10 +1,8 @@
-# Project manager
+# Project manager (ORM version)
 
-A Flask app for easily saving workhours. The project is for University of Helsinki course Tietokantasovellus.
+A Flask app for easily saving workhours. The version of the app uses SQLAlchemy ORM for database interaction.
 
 This app aims to make it easy to handle your work projects. It allows the user to use a stopwatch for saving workhours, comments for each session, choosing clients for projects etc. App is made for use in work, but it can be used for studies as well. Companies can be thought as courses, and projects as assignments.
-
-Latest development version can be tested in [Heroku](https://tsoha-project-manager.herokuapp.com). Make sure to check "Help" section for instructions.
 
 ## Development progress
 
