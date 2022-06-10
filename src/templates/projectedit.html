@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block messages %}
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+{% endblock %}
+
+{% block navbar_addon %}
+<li class="nav-item">
+    <a class="nav-link" type="button" href="{{ url_for('new_project') }}">New Project</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" type="button" href="{{ url_for('new_company') }}">New Company</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<h3>New Project</h3>
+<form method="post" action="">
+    <div class="col my-3 mx-1">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" name="project_name" placeholder="Name" minlength="4" aria-label="Type project name" autofocus>
+            <label for="name">Name</label>
+            <div id="name" class="form-text">
+                Name must be 4-128 characters. Allowed characters are numbers, all lower and uppercase letters and special characters ._-# and space. Name can't begin or end with a special character or space, except for # that can be used as the first character. Only one special character in a row is allowed.
+            </div>
+        </div>
+    </div>
+    <div class="col-xl mx-1">
+        <select class="form-select mb-3" aria-label="Select worktype" name="worktype">
+            {% for worktype in worktypes %}
+            {% if worktype.id == 0 %}
+            <option selected value="{{ worktype.id }}">{{ worktype.name }} {{ worktype.price }} €/h</option>
+            {% else %}
+            <option value="{{ worktype.id }}">{{ worktype.name }} {{ worktype.price }} €/h</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <select class="form-select mb-3" aria-label="Select client" name="company">
+            <option selected value="0">--select company--</option>
+            {% for company in companies %}
+            <option value="{{ company.id }}">{{ company.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md mx-1 mb-3">
+        <button class="btn btn-primary" type="submit" name="action" value="create">Create</button>
+        <button class="btn btn-outline-primary" type="button" name="action" value="start" disabled>Create and start</button>
+        <button class="btn btn-outline-primary" type="button" name="action" value="finish" disabled>Create and finish</button>
+        <button class="btn btn-outline-danger" type="reset" href="{{ url_for('manager') }}">Cancel</button>
+    </div>
+</form>
+{% endblock %}

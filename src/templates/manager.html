@@ -10,66 +10,14 @@
 
 {% block navbar_addon %}
 <li class="nav-item">
-    <a class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target="#newProject" aria-expanded="false" aria-controls="newProject">New Project</a>
+    <a class="nav-link" type="button" href="{{ url_for('new_project') }}">New Project</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target="#newCompany" aria-expanded="false" aria-controls="newClient">New Company</a>
+    <a class="nav-link" type="button" href="{{ url_for('new_company') }}">New Company</a>
 </li>
 {% endblock %}
 
 {% block content %}
-<div class="container" id="switchPanels">
-    <div class="collapse" id="newProject" data-bs-parent="#switchPanels">
-        <h3>New Project</h3>
-        <form method="post" action="">
-            <div class="col my-3 mx-1">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="name" name="project_name" placeholder="Name" minlength="4" aria-label="Type project name" autofocus>
-                    <label for="name">Name</label>
-                </div>
-            </div>
-            <div class="col-xl mx-1">
-                <select class="form-select mb-3" aria-label="Select worktype" name="worktype">
-                    {% for worktype in worktypes %}
-                    {% if worktype.id == 0 %}
-                    <option selected value="{{ worktype.id }}">{{ worktype.name }} {{ worktype.price }} €/h</option>
-                    {% else %}
-                    <option value="{{ worktype.id }}">{{ worktype.name }} {{ worktype.price }} €/h</option>
-                    {% endif %}
-                    {% endfor %}
-                </select>
-                <select class="form-select mb-3" aria-label="Select client" name="company">
-                    <option selected value="0">--select company--</option>
-                    {% for company in companies %}
-                    <option value="{{ company.id }}">{{ company.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-md mx-1 mb-3">
-                <button class="btn btn-primary" type="submit" name="action" value="create">Create</button>
-                <button class="btn btn-outline-primary" type="button" name="action" value="start" disabled>Create and start</button>
-                <button class="btn btn-outline-primary" type="button" name="action" value="finish" disabled>Create and finish</button>
-                <button class="btn btn-outline-danger" type="reset" data-bs-toggle="collapse" data-bs-target="#newProject">Cancel</button>
-            </div>
-        </form>
-    </div>
-    <div class="collapse" id="newCompany" data-bs-parent="#switchPanels">
-        <h3>New Company</h3>
-        <form method="post">
-            <div class="col my-3 mx-1">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="name" name="company_name" placeholder="Name" minlength="3" autofocus required>
-                    <label for="name">Name</label>
-                </div>
-            </div>
-            <div class="col-md mx-1 mb-3">
-                <button class="btn btn-primary" type="submit">Create</button>
-                <button class="btn btn-outline-danger" type="reset" data-bs-toggle="collapse" data-bs-target="#newCompany">Cancel</button>
-            </div>
-        </form>
-    </div>
-</div>
-
 <div class="table-responsive mt-3">
     <table class="table table-hover" id="mainTable">
         <thead class="table-dark">
@@ -81,6 +29,13 @@
             </tr>
         </thead>
         <tbody>
+            {% if not projects %}
+            <tr>
+                <td rowspan="4">
+                    You do not have any projects yet. Create you first project <a class="link" href="{{ url_for('new_project') }}">here</a>.
+                </td>
+            </tr>
+            {% else %}
             {% for project in projects %}
 
             <tr>
@@ -106,6 +61,7 @@
             </tr>
 
             {% endfor %}
+            {% endif %}
         </tbody>
     </table>
 </div>
